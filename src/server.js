@@ -3,6 +3,23 @@ import index from './routes/index'
 import path from 'path'
 import logger from 'morgan'
 import bodyParser from 'body-parser'
+import passport from 'passport'
+import FacebookStrategy from 'passport-facebook'
+import db from './database'
+
+require('dotenv').config()
+
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: "http://localhost:7500/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ facebookId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
 
 const server = express()
 
