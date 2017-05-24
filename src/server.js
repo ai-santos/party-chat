@@ -12,7 +12,8 @@ require('dotenv').config()
 const fbOption = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: "http://localhost:7500/auth/facebook/callback"
+  callbackURL: "http://localhost:7500/auth/facebook/callback",
+  profileFields: ['emails']
 }
 
 const fbCallback = (accessToken, refreshToken, profile, cb) => {
