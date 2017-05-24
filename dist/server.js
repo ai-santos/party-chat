@@ -28,23 +28,23 @@ var _passportFacebook = require('passport-facebook');
 
 var _passportFacebook2 = _interopRequireDefault(_passportFacebook);
 
-var _database = require('./database');
-
-var _database2 = _interopRequireDefault(_database);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// import db from './database'
 
 require('dotenv').config();
 
-_passport2.default.use(new _passportFacebook2.default({
+var fbOption = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
   callbackURL: "http://localhost:7500/auth/facebook/callback"
-}, function (accessToken, refreshToken, profile, cb) {
-  User.findOrCreate({ facebookId: profile.id }, function (err, user) {
-    return cb(err, user);
-  });
-}));
+};
+
+var fbCallback = function fbCallback(accessToken, refreshToken, profile, cb) {
+  console.log(accessToken, refreshToken, profile);
+};
+
+_passport2.default.use(new _passportFacebook2.default(fbOption, fbCallback));
 
 var server = (0, _express2.default)();
 
@@ -58,6 +58,12 @@ server.use(_bodyParser2.default.urlencoded({ extended: true }));
 
 //routes
 server.use('/', _index2.default);
+
+server.get('/login', _passport2.default.authenticate('facebook'));
+
+server.get('/auth/facebook/callback', _passport2.default.authenticate('facebook', function (err, user, info) {
+  console.log(err, user, info);
+}));
 
 server.listen(process.env.PORT || 7500);
 

@@ -48,14 +48,29 @@
 
     </div>
 
-    <div class="splash-container">
-      <h1 class="splash-head">Saya</h1>
-      <p class="splash-subhead">Let's Party</p>
-    </div>
-    <div class="content-wrapper"></div>
-    <script>
+    <form class="pure-form pure-form-stacked">
+      <fieldset>
+          <legend>Log In Via Facebook</legend>
 
-    </script>
+          <a class="/login" href="#">Log In Via Facebook</a>
+
+          <legend>Log In Via Saya</legend>
+          <label for="email">Email</label>
+          <input id="email" type="email" placeholder="Email">
+          <span class="pure-form-message">This is a required field.</span>
+
+          <label for="password">Password</label>
+          <input id="password" type="password" placeholder="Password">
+
+          <label for="remember" class="pure-checkbox">
+              <input id="remember" type="checkbox"> Remember me
+          </label>
+
+          <button type="submit" class="pure-button pure-button-primary">Sign in</button>
+      </fieldset>
+    </form>
+
+
 
 
   </body>
